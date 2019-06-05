@@ -2,12 +2,13 @@ require "pry"
 
 class CashRegister
     attr_accessor :total
-    attr_reader :discount, :cart
+    attr_reader :discount, :cart, :most_recent
 
     def initialize(discount = 0)
         @total = 0
         @discount = discount
         @cart = []
+        @most_recent = {}
     end
 
     # def add_total=(num)
@@ -23,6 +24,8 @@ class CashRegister
             @total += price
             i += 1
         end   
+        @most_recent["title"] = title
+        @most_recent["price"] = price
     end
     # binding.pry
 
@@ -37,7 +40,8 @@ class CashRegister
     end
 
     def void_last_transaction
-
+        cart.pop
+        @total -= @most_recent["price"]
     end
 
     
